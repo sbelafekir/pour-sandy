@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1b1f3b">
+  <title>Pour Sandy</title>
+  <meta property="og:title" content="Cinq lettres pour ton voyage.">
+  <meta name="twitter:title" content="Cinq lettres pour ton voyage.">
+  <meta property="og:type" content="website">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Pour Sandy">
+  <link rel="icon" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="embers" id="embers"></div>
+
+<header>
+  <svg class="lanterns" id="lanterns" viewBox="0 0 360 96"></svg>
+  <h1>Pour Sandy<span class="orn"><i></i><svg viewBox="0 0 24 24"><defs><radialGradient id="ornGlow"><stop offset="0" stop-color="#ffb35c" stop-opacity=".55"/><stop offset="1" stop-color="#ffb35c" stop-opacity="0"/></radialGradient></defs><circle cx="12" cy="12" r="12" fill="url(#ornGlow)"/><path d="M12 3.5 C12.6 9 15 11.4 20.5 12 C15 12.6 12.6 15 12 20.5 C11.4 15 9 12.6 3.5 12 C9 11.4 11.4 9 12 3.5 Z" fill="#ffd49a"/></svg><i></i></span></h1>
+  <p class="intro">Avec ton impatience, t'aurais ouvert toutes les enveloppes d'un coup. Alors voilà cinq lettres pour tes deux mois en Asie, et chacune s'ouvre le jour prévu. Pas avant, j'ai vérifié.</p>
+  <div class="count">
+    <button class="waiting" id="waiting" hidden></button>
+    <p class="count-label" id="countLabel"></p>
+    <div class="boxes" id="boxes"></div>
+  </div>
+  <div class="trip">
+    <svg class="route" id="route" viewBox="0 0 320 64"></svg>
+    <p class="trip-label" id="tripLabel"></p>
+  </div>
+  <button class="sound" id="sound"></button>
+</header>
+
+<ol class="pile" id="pile"></ol>
+
+<footer>
+  <svg class="skyline" viewBox="0 0 400 130">
+    <g fill="#16142d">
+      <path d="M40 120 C 38 98, 43 78, 53 60" fill="none" stroke="#16142d" stroke-width="4.5" stroke-linecap="round"/>
+      <path d="M53 60 C 41 52, 28 53, 17 62 C 29 56, 42 56, 53 60 Z"/>
+      <path d="M53 60 C 61 48, 75 46, 88 52 C 76 50, 63 53, 53 60 Z"/>
+      <path d="M53 60 C 49 46, 39 38, 27 36 C 39 42, 47 50, 53 60 Z"/>
+      <path d="M53 60 C 59 46, 67 38, 80 34 C 70 42, 61 50, 53 60 Z"/>
+      <path d="M53 60 C 58 64, 67 72, 71 84 C 63 74, 57 68, 53 60 Z"/>
+      <rect x="72" y="94" width="56" height="26"/>
+      <path d="M62 96 Q 71 94 77 85 L 123 85 Q 129 94 138 96 Z"/>
+      <rect x="162" y="98" width="36" height="22"/>
+      <path d="M145 100 Q 160 98 166 89 L 194 89 Q 200 98 215 100 Z"/>
+      <rect x="166" y="78" width="28" height="11"/>
+      <path d="M151 80 Q 164 78 170 69 L 190 69 Q 196 78 209 80 Z"/>
+      <rect x="170" y="59" width="20" height="10"/>
+      <path d="M157 61 Q 168 59 173 50 L 187 50 Q 192 59 203 61 Z"/>
+      <rect x="179" y="36" width="2" height="14"/>
+      <circle cx="180" cy="35" r="2.4"/>
+      <rect x="226" y="102" width="34" height="18"/>
+      <path d="M221 102 L 265 102 L 259 93 L 227 93 Z"/>
+      <rect x="270" y="106" width="30" height="14"/>
+      <path d="M265 106 L 305 106 L 299 97 L 271 97 Z"/>
+      <path d="M360 120 C 362 98, 357 80, 346 63" fill="none" stroke="#16142d" stroke-width="4.5" stroke-linecap="round"/>
+      <path d="M346 63 C 358 55, 371 56, 383 65 C 371 59, 358 59, 346 63 Z"/>
+      <path d="M346 63 C 338 51, 324 49, 311 55 C 323 53, 336 56, 346 63 Z"/>
+      <path d="M346 63 C 350 49, 360 41, 372 39 C 360 45, 352 53, 346 63 Z"/>
+      <path d="M346 63 C 340 49, 332 41, 319 37 C 329 45, 338 53, 346 63 Z"/>
+      <path d="M346 63 C 341 67, 332 75, 328 87 C 336 77, 342 71, 346 63 Z"/>
+      <rect x="0" y="119" width="400" height="11"/>
+    </g>
+    <g fill="#ffb35c" opacity=".8">
+      <rect x="86" y="101" width="8" height="8" rx="1"/>
+      <rect x="106" y="101" width="8" height="8" rx="1"/>
+      <rect x="175" y="105" width="10" height="15" rx="5"/>
+      <rect x="233" y="108" width="20" height="5" rx="1" opacity=".7"/>
+    </g>
+    <path d="M212 84 Q 262 100 312 84" fill="none" stroke="rgba(255,255,255,.22)" stroke-width=".8"/>
+    <g fill="#ffd08a">
+      <circle class="twinkle" cx="222" cy="87.6" r="1.6"/>
+      <circle class="twinkle" cx="242" cy="91.3" r="1.6" style="animation-delay:-.5s"/>
+      <circle class="twinkle" cx="262" cy="92.6" r="1.6" style="animation-delay:-1s"/>
+      <circle class="twinkle" cx="282" cy="91.3" r="1.6" style="animation-delay:-1.5s"/>
+      <circle class="twinkle" cx="302" cy="87.6" r="1.6" style="animation-delay:-2s"/>
+    </g>
+  </svg>
+</footer>
+
+<div class="backdrop" id="backdrop"></div>
+<div class="skylayer" id="sky"></div>
+<div class="overlay" id="overlay">
+  <button class="close" id="close">×</button>
+  <article class="letter" id="letter">
+    <span class="lstamp" id="lStamp"></span>
+    <h2 id="lTitle"></h2>
+    <p class="d" id="lDate"></p>
+    <div id="lBody"></div>
+    <p class="sign" id="lSign"></p>
+    <button class="done" id="done">Remettre dans l'enveloppe</button>
+  </article>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
