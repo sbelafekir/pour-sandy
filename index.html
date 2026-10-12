@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1b1f3b">
+  <meta name="color-scheme" content="dark">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Pour Sandy</title>
+  <meta property="og:title" content="Cinq lettres pour ton voyage.">
+  <meta name="twitter:title" content="Cinq lettres pour ton voyage.">
+  <meta property="og:type" content="website">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Pour Sandy">
+  <link rel="icon" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="patrick-hand.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="literata.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script>
+  // le reste est caché pendant l'entrée, sinon la page clignote
+  document.body.classList.add("porte");
+
+  // heure en Asie : si le téléphone y est déjà (UTC+5 à +9) c'est la sienne, sinon celle de Bangkok (UTC+7)
+  function heureEnAsie(d) {
+    const decal = -d.getTimezoneOffset() / 60;
+    if (decal >= 5 && decal <= 9) return d.getHours() + d.getMinutes() / 60;
+    return (d.getUTCHours() + d.getUTCMinutes() / 60 + 7) % 24;
+  }
+
+  // 0 en pleine nuit, 1 en plein jour. lever vers 6h, coucher vers 18h, avec une heure de transition
+  function niveauDuJour(h) {
+    const palier = (a, b) => {
+      const x = Math.min(1, Math.max(0, (h - a) / (b - a)));
+      return x * x * (3 - 2 * x);
+    };
+    return palier(5.6, 6.8) - palier(17.4, 18.6);
+  }
+
+  // pour que la première image ait déjà les bonnes couleurs
+  (function () {
+    const j = niveauDuJour(heureEnAsie(new Date()));
+    document.documentElement.style.setProperty("--jour", j.toFixed(3));
+    document.documentElement.classList.toggle("jour", j >= 0.6);
+    document.documentElement.classList.toggle("nuit", j <= 0.4);
+  })();
+</script>
+
+<noscript><p class="sans-js">Pour ouvrir les lettres, il faut activer JavaScript.</p></noscript>
+<div class="ciel-jour"></div>
+<div class="creps"></div>
+<canvas class="ciel" id="ciel"></canvas>
+<svg class="defs" width="0" height="0">
+  <defs>
+    <radialGradient id="cireRouge" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#ea6c60"/><stop offset=".55" stop-color="#b8372f"/><stop offset="1" stop-color="#6c1b15"/></radialGradient>
+    <radialGradient id="cireOr" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#fbe6a6"/><stop offset=".5" stop-color="#d9a441"/><stop offset="1" stop-color="#85561a"/></radialGradient>
+    <radialGradient id="cireBrille" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="kraft" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3c698"/><stop offset="1" stop-color="#c9a56f"/></linearGradient>
+  </defs>
+</svg>
+<div class="aube-s" id="aubeScroll"></div>
+<div class="aube"></div>
+
+<div class="portail" id="portail" hidden></div>
+<div class="decompte" id="decompte"></div>
+
+<header>
+  <svg class="lanterns" id="lanterns" viewBox="0 0 360 96"></svg>
+  <p class="refuge">Fais de ce site ton refuge, il se cale sur ton heure, jour et nuit.</p>
+  <h1>Pour Sandy<span class="orn"><i></i><svg viewBox="0 0 24 24"><defs><radialGradient id="ornGlow"><stop offset="0" stop-color="#ffb35c" stop-opacity=".55"/><stop offset="1" stop-color="#ffb35c" stop-opacity="0"/></radialGradient></defs><circle cx="12" cy="12" r="12" fill="url(#ornGlow)"/><path d="M12 3.5 C12.6 9 15 11.4 20.5 12 C15 12.6 12.6 15 12 20.5 C11.4 15 9 12.6 3.5 12 C9 11.4 11.4 9 12 3.5 Z" fill="#ffd49a"/></svg><i></i></span></h1>
+  <p class="intro">Voilà cinq lettres pour tes deux mois en Asie, et chacune s'ouvre le jour prévu. Pas avant, j'ai vérifié.</p>
+  <p class="astuce">Essaie d'appuyer un peu n'importe où sur le décor, il se passe des trucs pas mal.</p>
+  <div class="count">
+    <button class="waiting" id="waiting" hidden></button>
+    <p class="count-label" id="countLabel"></p>
+    <div class="boxes" id="boxes"></div>
+  </div>
+  <div class="trip">
+    <svg class="route" id="route" viewBox="0 0 320 64"></svg>
+    <p class="trip-label" id="tripLabel"></p>
+  </div>
+  <button class="sound" id="sound"></button>
+  <div class="decor lune" id="lune"></div>
+  <div class="decor soleil-haut" id="soleilHaut"></div>
+  <div class="decor nuages" id="nuages"></div>
+  <div class="decor paysage" id="paysage"></div>
+</header>
+
+<ol class="pile" id="pile"></ol>
+
+<section class="passeport" id="passeport"></section>
+
+<footer>
+  <div class="decor paysage bas" id="paysageBas"></div>
+</footer>
+
+<div class="avant" id="avant"></div>
+
+<div class="backdrop" id="backdrop"></div>
+<div class="skylayer" id="sky"></div>
+<div class="overlay" id="overlay">
+  <button class="close" id="close">×</button>
+  <article class="letter" id="letter">
+    <span class="veilleuse"></span>
+    <span class="filigrane" id="lFiligrane"></span>
+    <span class="lstamp" id="lStamp"></span>
+    <h2 id="lTitle"></h2>
+    <p class="d" id="lDate"></p>
+    <div id="lBody"></div>
+    <p class="sign" id="lSign"></p>
+    <button class="done" id="done">Remettre dans l'enveloppe</button>
+  </article>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="decor.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
