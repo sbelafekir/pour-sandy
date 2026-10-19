@@ -131,7 +131,7 @@ function quand(l) {
 }
 const fr = (t) => t.replace(/ ([!?:;»])/g, NBSP + "$1").replace(/« /g, "«" + NBSP);
 const joursAvant = (l) => Math.round((debutJour(dateLettre(l)) - debutJour(maintenant())) / UN_JOUR);
-const ouverte = (l) => APERCU || dateLettre(l) <= maintenant();
+const ouverte = (l) => APERCU || (l.jour === 12 && l.mois === 10 && dateLettre(l) <= maintenant());
 const dansXJours = (n) => (n === 1 ? "demain" : n === 2 ? "après-demain" : `dans ${n} jours`);
 const vibrer = (motif) => { if (navigator.vibrate) navigator.vibrate(motif); };
 
